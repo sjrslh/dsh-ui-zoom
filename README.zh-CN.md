@@ -21,16 +21,12 @@
 ## 安装
 
 ```sh
-dsh plugin --profile web add dsh-ui-zoom
+dsh plugin --profile web add github:sjrslh/dsh-ui-zoom
 ```
 
-装完重启 `dsh web`（或桌面端）。只从 GitHub 装：
+装完重启 `dsh web`（或桌面端）。
 
-```sh
-dsh plugin --profile web add github:OWNER/dsh-ui-zoom
-```
-
-> 把 `OWNER` 换成仓库所属账号。
+npm 版本还在准备中；发布之后 `dsh plugin --profile web add dsh-ui-zoom` 也能直接装。
 
 ## 兼容
 

@@ -21,16 +21,12 @@ Two small additions for [DeepSeek Harness](https://github.com/deepseek-ai/deepse
 ## Install
 
 ```sh
-dsh plugin --profile web add dsh-ui-zoom
+dsh plugin --profile web add github:sjrslh/dsh-ui-zoom
 ```
 
-Restart `dsh web` (or the desktop app) afterwards. GitHub-only:
+Restart `dsh web` (or the desktop app) afterwards.
 
-```sh
-dsh plugin --profile web add github:OWNER/dsh-ui-zoom
-```
-
-> Replace `OWNER` with the repository owner.
+An npm release is planned. Once it is published, `dsh plugin --profile web add dsh-ui-zoom` will work as well.
 
 ## Compatibility
 
