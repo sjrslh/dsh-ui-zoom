@@ -1,0 +1,6 @@
+# Bundle layer for dsh-ui-zoom: insert this plugin's own row into the
+# composed cordis tree. `name` is the package specifier and must resolve
+# from the profile directory; `id` is the plugin name exported by lib/index.js.
+- insert:
+    - id: dsh-ui-zoom
+      name: dsh-ui-zoom
