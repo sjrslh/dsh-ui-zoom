@@ -31,23 +31,23 @@ npm 版本还在准备中；发布之后 `dsh plugin --profile web add dsh-ui-zo
 ## 兼容
 
 - dsh `>= 0.1.0-rc.6`
-- 桌面端：走 Electron 原生 `webContents.setZoomFactor`，真正的浏览器级缩放
-- 纯 `dsh web`：宿主路由返回 `supported:false`，插件不再拦 `Ctrl`+滚轮，交给浏览器自己的页面缩放
+- 桌面端和纯 `dsh web` 都能用：缩放完全在渲染进程里完成，不需要宿主路由或 Electron API
 - 颜色全部走 `--dsw-alias-*` token，深色/浅色主题和第三方皮肤下都能看
 
-## 为什么用原生缩放，而不是 CSS zoom
+## 缩放为什么不会挤坏布局
 
-第一版是在 `<html>` 上加 CSS `zoom`。它只缩放绘制，不改宿主用 JS 量出来的布局：放大到 100% 以上，输入框（composer）、模型选择和推理强度面板都会被推到视口外——框其实在，只是跑到屏幕外面去了。
+只给 `<html>` 加 CSS `zoom` 只缩放绘制。DSH 的壳和浮层是按 JS 像素量出来的（`window.innerHeight`、`getBoundingClientRect`、`MouseEvent.clientX`），所以纯 CSS 缩放在 100% 以上会把输入框、模型选择、推理强度面板推到视口外——框还在，只是跑到屏幕外面。
 
-这一版改成让宿主改真正的页面缩放：
+Electron 自带的 `webContents.setZoomFactor` 能改坐标系，但桌面端把 dsh 服务跑在 Node 子进程里（`ELECTRON_RUN_AS_NODE=1`），插件拿不到 `BrowserWindow`，渲染进程也没有缩放 IPC。所以这里用「CSS `zoom` + 度量垫片」：缩放时把下面这些值同步除以缩放比，正好是浏览器原生缩放的坐标语义（布局用 CSS 像素，绘制按 zoom 放大）：
 
 ```
-渲染进程  --fetch /dsh-ui-zoom/zoom-->  宿主插件  --webContents.setZoomFactor-->  Electron
+window.innerWidth / innerHeight
+Element.clientWidth / clientHeight
+Element.getBoundingClientRect()
+MouseEvent.clientX / clientY
 ```
 
-原生缩放会改布局视口，文字、间距、输入框和所有二级浮层都在正常坐标系里。模型选择、推理强度菜单在 60%–180% 全程验证过。
-
-宿主侧在 `lib/index.js`：只接受本机回环（或同源）请求，比例夹在 0.6–1.8，没有 Electron 窗口时返回 `supported:false`。
+回到 100% 时垫片自动撤掉。在桌面端 60%–180% 实测：输入框、模型选择、推理强度菜单位置都正常。
 
 ## 开发
 
@@ -60,8 +60,8 @@ node --check lib/index.js
 仓库结构：
 
 ```
-lib/index.js       宿主侧：/dsh-ui-zoom/zoom 路由 + Electron 缩放桥
-lib/client.js      浏览器侧 bundle（__ModuleLoader__ 格式，无构建步骤）
+lib/index.js       宿主侧（空插件，只为让包成为合法的 Cordis 插件）
+lib/client.js      浏览器侧 bundle：缩放 + 度量垫片 + 设置入口
 cordis.patch.yml   bundle patch：把本插件插入 profile 的 cordis 树
 scripts/smoke.mjs  无浏览器冒烟测试
 ```

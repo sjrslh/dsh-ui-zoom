@@ -31,23 +31,23 @@ An npm release is planned. Once it is published, `dsh plugin --profile web add d
 ## Compatibility
 
 - dsh `>= 0.1.0-rc.6`
-- Desktop app: native zoom through Electron's `webContents.setZoomFactor`
-- Plain `dsh web`: the host route reports `supported:false`, the plugin stops swallowing `Ctrl`+wheel and the browser's own page zoom takes over
+- Desktop app and plain `dsh web` — the zoom is renderer-only, no host route or Electron API required
 - Colours use `--dsw-alias-*` tokens, so light/dark themes and third-party skins keep working
 
-## Why native zoom, not CSS zoom
+## How the zoom stays layout-correct
 
-The first version scaled the page with CSS `zoom` on `<html>`. That scales paint only: DSH measures the shell and positions its popovers in JS pixels, so anything above 100% pushed the composer, the model picker and the reasoning-effort panel outside the viewport — the boxes were still there, just off-screen.
+CSS `zoom` on `<html>` only scales paint. DSH measures its shell and positions its popovers in JS pixels (`window.innerHeight`, `getBoundingClientRect`, `MouseEvent.clientX`), so a plain CSS zoom pushed the composer, the model picker and the reasoning-effort panel outside the viewport above 100% — the boxes were still there, just off-screen.
 
-This version asks the host to change the real page zoom instead:
+Electron's own `webContents.setZoomFactor` would change the coordinate space, but the desktop host runs the dsh server as a Node-mode child (`ELECTRON_RUN_AS_NODE=1`) with no `BrowserWindow` access, and the renderer exposes no zoom IPC. So the zoom is implemented as CSS `zoom` **plus a metric shim**: while zoomed, these are divided by the zoom factor, which is exactly the coordinate semantics of browser zoom (layout in CSS px, paint scaled):
 
 ```
-renderer  --fetch /dsh-ui-zoom/zoom-->  host plugin  --webContents.setZoomFactor-->  Electron
+window.innerWidth / innerHeight
+Element.clientWidth / clientHeight
+Element.getBoundingClientRect()
+MouseEvent.clientX / clientY
 ```
 
-Native zoom changes the layout viewport, so text, spacing, the composer and every secondary popover keep their normal coordinates. That was verified against the model picker and reasoning-effort menus at 60%–180%.
-
-The host half lives in `lib/index.js`: it only answers on loopback (or same-origin), clamps the factor to 0.6–1.8, and reports `supported:false` when there is no Electron window to drive.
+The shim is removed again at 100%. Verified in the desktop app at 60%–180%: the composer, model picker and reasoning-effort menus keep their normal positions.
 
 ## Development
 
@@ -60,8 +60,8 @@ node --check lib/index.js
 Layout:
 
 ```
-lib/index.js       host half: the /dsh-ui-zoom/zoom route and the Electron zoom bridge
-lib/client.js      browser bundle (__ModuleLoader__ format, no build step)
+lib/index.js       host half (empty plugin; makes the package a real Cordis plugin)
+lib/client.js      browser bundle: zoom + metric shim + Settings entry
 cordis.patch.yml   bundle patch inserting the plugin into the profile tree
 scripts/smoke.mjs  browser-free smoke test
 ```
