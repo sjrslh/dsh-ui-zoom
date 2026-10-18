@@ -1,7 +1,7 @@
 {
   "name": "dsh-ui-zoom",
-  "version": "0.1.0",
-  "description": "Ctrl+wheel page zoom for DeepSeek Harness (60–180%, remembered), plus a bottom-right Settings entry.",
+  "version": "0.2.0",
+  "description": "Ctrl+wheel native page zoom for DeepSeek Harness (60–180%, remembered), plus a bottom-right Settings entry.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {

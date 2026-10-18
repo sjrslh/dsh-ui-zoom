@@ -31,32 +31,36 @@ An npm release is planned. Once it is published, `dsh plugin --profile web add d
 ## Compatibility
 
 - dsh `>= 0.1.0-rc.6`
-- Desktop and web; on desktop the `Ctrl+,` path goes through Electron's native keyboard bridge, which is why this plugin drives the host command instead of synthesising key events
+- Desktop app: native zoom through Electron's `webContents.setZoomFactor`
+- Plain `dsh web`: the host route reports `supported:false`, the plugin stops swallowing `Ctrl`+wheel and the browser's own page zoom takes over
 - Colours use `--dsw-alias-*` tokens, so light/dark themes and third-party skins keep working
 
-## Why the fonts and the UI scale together
+## Why native zoom, not CSS zoom
 
-The plugin only sets CSS `zoom` on `<html>`; it does not patch individual `font-size` values. DSH lays out on
+The first version scaled the page with CSS `zoom` on `<html>`. That scales paint only: DSH measures the shell and positions its popovers in JS pixels, so anything above 100% pushed the composer, the model picker and the reasoning-effort panel outside the viewport — the boxes were still there, just off-screen.
 
-```css
-html, body, #root { height: 100% }
+This version asks the host to change the real page zoom instead:
+
+```
+renderer  --fetch /dsh-ui-zoom/zoom-->  host plugin  --webContents.setZoomFactor-->  Electron
 ```
 
-so percentage heights re-resolve against the zoomed viewport and the whole page scales as one coordinate system — text, cards, spacing, icons and `position: fixed` elements included.
+Native zoom changes the layout viewport, so text, spacing, the composer and every secondary popover keep their normal coordinates. That was verified against the model picker and reasoning-effort menus at 60%–180%.
 
-**Known boundary:** CSS `zoom` does not change what `vh` / `dvh` resolve to. DSH uses `100dvh` for the `max-height` of a few dialogs (schedule zone menu, directory picker, shortcuts panel); at high zoom those caps get a little loose. The main layout is unaffected.
+The host half lives in `lib/index.js`: it only answers on loopback (or same-origin), clamps the factor to 0.6–1.8, and reports `supported:false` when there is no Electron window to drive.
 
 ## Development
 
 ```sh
 node scripts/smoke.mjs   # runs the bundle against React/DOM stubs: register, apply, render
 node --check lib/client.js
+node --check lib/index.js
 ```
 
 Layout:
 
 ```
-lib/index.js       host half (empty plugin; makes the package a real Cordis plugin)
+lib/index.js       host half: the /dsh-ui-zoom/zoom route and the Electron zoom bridge
 lib/client.js      browser bundle (__ModuleLoader__ format, no build step)
 cordis.patch.yml   bundle patch inserting the plugin into the profile tree
 scripts/smoke.mjs  browser-free smoke test
