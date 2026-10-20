@@ -1,5 +1,9 @@
 # dsh-ui-zoom · DSH 界面缩放
 
+[![stars](https://img.shields.io/github/stars/sjrslh/dsh-ui-zoom?style=flat-square&color=6C7BFF&label=%E6%8A%95%E5%96%82)](https://github.com/sjrslh/dsh-ui-zoom/stargazers)
+[![license](https://img.shields.io/github/license/sjrslh/dsh-ui-zoom?style=flat-square)](LICENSE)
+[![dsh](https://img.shields.io/badge/DSH-%E2%89%A5%200.1.0--rc.6-6C7BFF?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
+
 [中文](README.md) | [English](README.en.md)
 
 > 一条住在 DeepSeek Harness 里的蓝色小鲸鱼，替主人把整块界面调大调小。
