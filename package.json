@@ -1,7 +1,7 @@
 {
   "name": "dsh-ui-zoom",
-  "version": "0.3.2",
-  "description": "Ctrl+wheel page zoom for DeepSeek Harness (60–180%, remembered), with a layout-consistent metric shim, plus a bottom-right Settings entry.",
+  "version": "0.4.0",
+  "description": "Ctrl+wheel page zoom for DeepSeek Harness (60–180%, remembered) with a layout-consistent metric shim, popovers that stay in place, a root-scroll lock and a bottom-right Settings entry.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -16,7 +16,9 @@
     "lib",
     "cordis.patch.yml",
     "README.md",
-    "README.zh-CN.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "scripts",
     "LICENSE"
   ],
   "scripts": {
