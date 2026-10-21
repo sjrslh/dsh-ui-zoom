@@ -13,7 +13,7 @@
 
 适用于 [DeepSeek Harness (DSH)](https://github.com/deepseek-ai/deepseek-harness) 的客户端插件，不改宿主代码。
 
-![Ctrl + 滚轮缩放](assets/demo.gif)
+![Ctrl + 滚轮缩放](https://raw.githubusercontent.com/sjrslh/dsh-ui-zoom/main/assets/demo.gif)
 
 ---
 

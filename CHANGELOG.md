@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.4.1 — 2026-10-21
+
+- 首次发布到 npm（dsh plugin --profile web add dsh-ui-zoom 现在可用）
+- package.json 补上 
+epository / homepage / ugs，npm 页面能解析相对图片
+- README 的演示 GIF 改用绝对地址，npm 与 GitHub 都能正常显示
+
 ## v0.4.0 — 2026-10-21
 
 - 新增 `Ctrl` + `=` / `Ctrl` + `-` 快捷键（配合已有的 `Ctrl` + `0`），和 `Ctrl` + 滚轮同一套节流与边界
