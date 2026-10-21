@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 jobs:
@@ -27,3 +27,8 @@ jobs:
           test "$VERSION" = "$TAG"
       - name: Publish with provenance (trusted publishing, no token)
         run: npm publish --provenance --access public
+      - name: Create the GitHub release
+        if: github.ref_type == 'tag'
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
