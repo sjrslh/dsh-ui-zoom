@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.4 — 2026-10-21
+
+- npm 包不再包含 `scripts/`：测试只留在仓库里，由 CI 运行
+- 原因：目录站的静态分析会把 tarball 里的 `readFileSync` / `new Function` 记成 `fs-read` / `dynamic-code` 能力标签，一个缩放插件不该背这两条
+
 ## v0.4.3 — 2026-10-21
 
 - 验证 Trusted Publishing：首个由 GitHub Actions（OIDC + provenance）发布的版本，不再使用 npm token
