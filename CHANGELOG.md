@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.3 — 2026-10-21
+
+- 验证 Trusted Publishing：首个由 GitHub Actions（OIDC + provenance）发布的版本，不再使用 npm token
+
 ## v0.4.2 — 2026-10-21
 
 - 发布流程改为 GitHub Actions + Trusted Publishing：推 * tag 自动发 npm，带 provenance 签名，不再需要 token

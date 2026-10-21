@@ -1,6 +1,6 @@
 {
   "name": "dsh-ui-zoom",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Ctrl+wheel page zoom for DeepSeek Harness (60–180%, remembered) with a layout-consistent metric shim, popovers that stay in place, a root-scroll lock and a bottom-right Settings entry.",
   "type": "module",
   "main": "lib/index.js",
