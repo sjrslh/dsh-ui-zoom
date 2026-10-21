@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.2 — 2026-10-21
+
+- 发布流程改为 GitHub Actions + Trusted Publishing：推 * tag 自动发 npm，带 provenance 签名，不再需要 token
+- CI 加跑 scripts/zoom.test.mjs，覆盖 Node 18 / 20 / 22 / 24
+- README 增加 npm 徽章与「反馈」段落；仓库开启 Discussions，新增 issue 表单
+
 ## v0.4.1 — 2026-10-21
 
 - 首次发布到 npm（dsh plugin --profile web add dsh-ui-zoom 现在可用）

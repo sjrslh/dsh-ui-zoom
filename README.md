@@ -2,6 +2,7 @@
 
 [![stars](https://img.shields.io/github/stars/sjrslh/dsh-ui-zoom?style=flat-square&color=6C7BFF&label=%E6%8A%95%E5%96%82)](https://github.com/sjrslh/dsh-ui-zoom/stargazers)
 [![license](https://img.shields.io/github/license/sjrslh/dsh-ui-zoom?style=flat-square)](LICENSE)
+[![npm](https://img.shields.io/npm/v/dsh-ui-zoom?style=flat-square&color=6C7BFF)](https://www.npmjs.com/package/dsh-ui-zoom)
 [![dsh](https://img.shields.io/badge/DSH-%E2%89%A5%200.1.0--rc.6-6C7BFF?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
 [![ci](https://github.com/sjrslh/dsh-ui-zoom/actions/workflows/ci.yml/badge.svg)](https://github.com/sjrslh/dsh-ui-zoom/actions/workflows/ci.yml)
 

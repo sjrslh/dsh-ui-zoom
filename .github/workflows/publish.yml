@@ -19,6 +19,7 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
       - name: Check tag matches package.json
+        if: github.ref_type == 'tag'
         run: |
           VERSION=$(node -p "require('./package.json').version")
           TAG=${GITHUB_REF_NAME#v}
