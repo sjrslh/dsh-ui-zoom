@@ -1,0 +1,45 @@
+name: 问题反馈
+description: 缩放不对、弹层错位、滚动异常、装了没反应
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。带一段录屏或截图，能少好几轮来回。
+  - type: input
+    id: dsh-version
+    attributes:
+      label: DSH 版本
+      description: 设置 → 关于，或终端执行 `dsh --version`
+      placeholder: 0.2.0-rc.2
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: 系统与显示缩放
+      description: 系统版本 + Windows 显示缩放比例 + 是否多屏
+      placeholder: Windows 11 24H2，125%，双屏
+    validations:
+      required: true
+  - type: input
+    id: level
+    attributes:
+      label: 出问题时的缩放比例
+      placeholder: 150%
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际发生了什么
+      description: 越具体越好，例如「模型选择器比按钮高约 40px」
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 你期望的结果
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其他信息
+      description: 同时装了哪些插件、是否改过主题、日志里的报错

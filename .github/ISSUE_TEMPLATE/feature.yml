@@ -1,0 +1,20 @@
+name: 功能建议
+description: 想要新的手势、比例范围、设置项
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: 你想要的改动
+      description: 一句话说明场景，比如「想在 2160p 屏上快速回到 125%」
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: 为什么现有功能不够用
+  - type: input
+    id: alt
+    attributes:
+      label: 你知道的其他实现
+      placeholder: 插件名或链接

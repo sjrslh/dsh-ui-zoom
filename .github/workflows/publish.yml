@@ -1,0 +1,28 @@
+name: publish
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Check tag matches package.json
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG=${GITHUB_REF_NAME#v}
+          echo "tag=$TAG package=$VERSION"
+          test "$VERSION" = "$TAG"
+      - name: Publish with provenance (trusted publishing, no token)
+        run: npm publish --provenance --access public

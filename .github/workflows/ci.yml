@@ -7,11 +7,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20, 22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - run: node --check lib/client.js
-      - run: node --check lib/index.js
-      - run: node scripts/smoke.mjs
+          node-version: ${{ matrix.node }}
+      - name: Syntax check
+        run: |
+          node --check lib/client.js
+          node --check lib/index.js
+      - name: Smoke test
+        run: node scripts/smoke.mjs
+      - name: Zoom metrics test
+        run: node scripts/zoom.test.mjs
