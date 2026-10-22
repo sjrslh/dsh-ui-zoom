@@ -39,10 +39,10 @@ Use `--profile web` for the web profile. Press `Ctrl + R` or restart DSH afterwa
 
 ### Option 2 — from a release (offline / pinned version)
 
-Download `dsh-ui-zoom-0.4.0.tgz` from [Releases](../../releases), then:
+Download `dsh-ui-zoom-0.4.4.tgz` from [Releases](../../releases), then:
 
 ```bash
-dsh plugin --profile desktop add /path/to/dsh-ui-zoom-0.4.0.tgz
+dsh plugin --profile desktop add /path/to/dsh-ui-zoom-0.4.4.tgz
 ```
 
 ### Option 3 — clone and link (for hacking on it)

@@ -51,10 +51,10 @@ Web 版把 `desktop` 换成 `web`。装完按 `Ctrl + R` 或重开 DSH 生效。
 
 ### 方式 2：从 Release 下压缩包（离线 / 锁版本）
 
-到 [Releases](../../releases) 下 `dsh-ui-zoom-0.4.0.tgz`，然后：
+到 [Releases](../../releases) 下 `dsh-ui-zoom-0.4.4.tgz`，然后：
 
 ```bash
-dsh plugin --profile desktop add /path/to/dsh-ui-zoom-0.4.0.tgz
+dsh plugin --profile desktop add /path/to/dsh-ui-zoom-0.4.4.tgz
 ```
 
 ### 方式 3：克隆后本地安装（想改代码）
