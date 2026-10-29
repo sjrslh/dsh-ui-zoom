@@ -27,7 +27,8 @@ function makeStyle() {
 const htmlStyle = makeStyle();
 const bodyStyle = makeStyle();
 
-const styleNode = { id: "", dataset: {}, textContent: "", remove() {} };
+let fitWritten = "";
+const styleNode = { id: "", dataset: {}, get textContent() { return fitWritten; }, set textContent(v) { fitWritten = v; }, remove() {} };
 
 globalThis.window = {
 	__ModuleLoader__: { load: (definition) => { captured = definition; } },
@@ -116,7 +117,8 @@ mod.apply(ctx);
 
 /* --- after apply with stored 1.5 ---------------------------------------- */
 assert.equal(htmlStyle.zoom, "1.5", "zoom should be restored from localStorage");
-assert.equal(htmlStyle.overflow, "hidden", "root scroller must be locked while zoomed");
+assert.equal(htmlStyle.overflow, "", "0.4.5 no longer clips the root scroller");
+assert.ok(fitWritten.includes("100vh / 1.5"), "root height is reclaimed as 100vh / s");
 assert.equal(htmlStyle.overscrollBehavior, "none");
 assert.equal(bodyStyle.overscrollBehavior, "none");
 
@@ -140,7 +142,7 @@ assert.equal(mouse.clientY, 100);
 cleanups[cleanups.length - 1]();
 
 assert.equal(htmlStyle.zoom, "", "zoom is removed at 100%");
-assert.equal(htmlStyle.overflow, "", "root overflow is released");
+assert.ok(fitWritten === "", "viewport fit style is cleared at 100%");
 assert.equal(htmlStyle.overscrollBehavior, "", "root overscroll is released");
 assert.equal(bodyStyle.overscrollBehavior, "contain", "the app's own body style is restored");
 assert.equal(window.innerWidth, 1200, "shim removed: innerWidth is real again");

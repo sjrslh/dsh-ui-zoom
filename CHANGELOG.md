@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.4.5 — 2026-10-29
+
+- **修复：粘贴长文本后整个界面被顶出屏幕。** 0.4.4 用 `html { overflow: hidden }` 藏掉 zoom 多出来的滚动条带，代价是内容一旦高过视口就被裁掉，聊天框被长 prompt 撑高时顶部内容直接消失且滚不回来
+- 改为**回收高度而不是裁掉**：缩放时给应用根容器（`#root` / `body > div:first-of-type` / `body > main`）写入 `height: calc(100vh / s)`，文档高度回到正好一屏，内容不再被裁
+- 滚轮兜底：只有当 target 的所有可滚动祖先都已到边界时才 `preventDefault()`，滚轮依然不会把整页推走，但内部滚动和键盘/滚动条滚动保持可用
+- 测试同步：`zoom.test.mjs` 现在断言「根高度被写成 `100vh / s`」而不是「overflow 被锁 hidden」
+
+
 ## v0.4.4 — 2026-10-21
 
 - npm 包不再包含 `scripts/`：测试只留在仓库里，由 CI 运行
